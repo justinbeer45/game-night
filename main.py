@@ -37,21 +37,18 @@ def get_game_name():
         time.sleep(1)
 
 
-def get_name_and_vote():
+def get_name_and_vote(player_count):
     user_name = None
-    for amigo in ThreeAmigos:
-        print(amigo.value)
     incorrect_name = True
     while incorrect_name:
         user_name = input("Who are you?")
         try:
             test_user_name(user_name)
         except InvalidNameException:
-            print("\tThat is not one of the names.")
+            print("\tThat is not one of the Three Amigos.")
             time.sleep(1)
         else:
             incorrect_name = False
-            # print("\nWelcome, {}.".format(user.title()))
             user_name = ThreeAmigos[user_name.upper()]
     invalid_vote = True
     while invalid_vote:
@@ -64,7 +61,34 @@ def get_name_and_vote():
         else:
             global choices
             choices.update({user_name.value: yn})
+            if player_count < 3:
+                print("Thank you, {} your vote has been recorded. Please pass the "
+                      "laptop to the next amigo.".format(user_name.value))
+            else:
+                print("Thank you, {} your vote has been recorded.".format(user_name.value))
             invalid_vote = False
+
+
+def get_decision():
+    yes = 0
+    no = 0
+    for value in choices.values():
+        if value == 'yes':
+            yes += 1
+        else:
+            no += 1
+    if yes > 1:
+        print("The ayes have it! We will play {} again next week.".format(game))
+        if yes == 3:
+            print("There were {} yeses and {} noes.".format(yes, no))
+        else:
+            print("There were {} yeses and {} no.".format(yes, no))
+    else:
+        print("The nays have it. We are moving on folks. ")
+        if no == 3:
+            print("There were {} yeses and {} noes.".format(yes, no))
+        else:
+            print("There was {} yes and {} noes.".format(yes, no))
 
 
 def test_user_vote(choice):
@@ -88,8 +112,8 @@ def test_user_name(name):
 if __name__ == '__main__':
     welcome()
     get_game_name()
+    player_count = 0
     for player in ThreeAmigos:
-        get_name_and_vote()
-    for user, vote in choices.items():
-        print("{} chose {}".format(user, vote.upper()))
-
+        player_count += 1
+        get_name_and_vote(player_count)
+    get_decision()
