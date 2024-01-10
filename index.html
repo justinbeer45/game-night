@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Game Night</title>
+    <!--add CSS stylesheet for elements on HTML page-->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<!--add content delivery network for Chart.js that we will use to graph game ranking results-->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!--add annotation plugin for cutoff line on main graph-->
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.0.0-rc/dist/chartjs-plugin-annotation.min.js"></script>
+<script>
+    Chart.register('chartjs-plugin-annotation');
+</script>
+<!--create canvas tag (required) which is used to draw the graphs with the javascript referencing
+the id of this canvas, do this befor the javascript file that creates the graph, so it has a canvas to use-->
+<div class="chartBox">
+    <canvas id="myChart"></canvas>
+</div>
+<!--link javascript source file for actual graph code -->
+<script src="script.js"></script>
+<div>Game Night</div>
+</body>
+</html>
